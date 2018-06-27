@@ -1,0 +1,62 @@
+buildscript {
+    ext {
+        kotlinVersion = '1.2.50'
+        springBootVersion = '2.0.3.RELEASE'
+        jvmTarget = '1.8'
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}")
+        classpath("org.jetbrains.kotlin:kotlin-allopen:${kotlinVersion}")
+    }
+}
+
+apply plugin: 'kotlin'
+apply plugin: 'kotlin-spring'
+apply plugin: 'org.springframework.boot'
+
+group = 'com.doubleu.danger'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = jvmTarget
+compileKotlin {
+    kotlinOptions {
+        freeCompilerArgs = ["-Xjsr305=strict"]
+        jvmTarget = "${jvmTarget}"
+    }
+}
+compileTestKotlin {
+    kotlinOptions {
+        freeCompilerArgs = ["-Xjsr305=strict"]
+        jvmTarget = "${jvmTarget}"
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+String jackson ='2.9.6'
+
+dependencies {
+    compile("com.fasterxml.jackson.core:jackson-core:${jackson}")
+    compile("com.fasterxml.jackson.core:jackson-annotations:${jackson}")
+    compile("com.fasterxml.jackson.core:jackson-databind:${jackson}")
+    compile("com.fasterxml.jackson.module:jackson-module-kotlin:${jackson}")
+
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-rest', version: springBootVersion
+    compile('org.springframework.boot:spring-boot-starter-web')
+    compile('com.fasterxml.jackson.module:jackson-module-kotlin')
+    compile("org.jetbrains.kotlin:kotlin-stdlib-jdk8:${kotlinVersion}")
+    compile("org.jetbrains.kotlin:kotlin-reflect:${kotlinVersion}")
+
+    compile('org.mongodb:mongodb-driver:3.4.2')
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-mongodb', version: springBootVersion
+
+    testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: springBootVersion
+    testCompile group: 'org.mockito', name: 'mockito-core', version: '2.19.0'
+    testCompile('com.nhaarman:mockito-kotlin:1.6.0')
+    testCompile group: 'org.assertj', name: 'assertj-core', version: '3.10.0'
+}

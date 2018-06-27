@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+set -e
+TS=`date +'%s'`
+FILENAME=${TS}-${1}.yml
+
+cat << EOF > src/main/resources/db/changelog/migrations/${FILENAME}
+---
+databaseChangeLog:
+  - changeSet:
+      id: ${TS}
+      author: CHANGEME
+      changes:
+EOF
+
+cat << EOF >> src/main/resources/db/changelog/db.changelog-master.yml
+  - include:
+      file: /db/changelog/migrations/${FILENAME}
+EOF
